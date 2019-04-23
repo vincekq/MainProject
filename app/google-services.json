@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1007534432487",
+    "firebase_url": "https://cloudtow-2d3da.firebaseio.com",
+    "project_id": "cloudtow-2d3da",
+    "storage_bucket": "cloudtow-2d3da.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1007534432487:android:d06e180425f45e3d",
+        "android_client_info": {
+          "package_name": "com.towmec.mainproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1007534432487-ffqsm4r1v2e0qu2he3rnou37j9830kig.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.towmec.mainproject",
+            "certificate_hash": "d89df6a405430b80ede1cad2f9dc33acb1282422"
+          }
+        },
+        {
+          "client_id": "1007534432487-skfvhg1n242lenemf323j55rr4s6gj7c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVEZvDoEoITUxf7qxnkcMUvfjiVGpmi4o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1007534432487-skfvhg1n242lenemf323j55rr4s6gj7c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

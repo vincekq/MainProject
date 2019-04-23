@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2d2d2d</color>
+    <color name="colorPrimaryDark">#111111</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white">#ffffff</color>
+    <color name="Primary">#795548</color>
+    <color name="Primary_dark">#5D4037</color>
+    <color name="Darkgray">#6c6c6c</color>
+    <color name="darkblue">#23283a</color>
+    <color name="darkpink">#fe104d</color>
+    <color name="Accent">#f1f5f8</color>
+    <color name="toolcolor">#f3f7f9</color>
+</resources>
