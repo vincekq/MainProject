@@ -33,9 +33,8 @@ public class login extends AppCompatActivity {
     private Button   mdriver;
     private Button   mlearn;
     private FirebaseAuth mAuth;
-    private FirebaseAuth.AuthStateListener firebaseAuthListener;
     ProgressBar progressBar;
-    EditText editTextPhone, editTextCode;
+    EditText editTextPhone;
     EditText editTextUser;
     String codeSent;
 
@@ -128,8 +127,6 @@ public class login extends AppCompatActivity {
                 this,               // Activity (for callback binding)
                 mCallbacks);        // OnVerificationStateChangedCallbacks
     }
-
-
 
     PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
 

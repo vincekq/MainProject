@@ -87,7 +87,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/buttonstylepink"
             android:drawableRight="@drawable/ic_send_black_24dp"
-            android:text="Get Code"
+            android:text="REGISTER"
             android:textColor="#fff"/>
     </LinearLayout>
 

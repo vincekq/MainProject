@@ -90,17 +90,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     protected void onCreate(Bundle savedInstanceState) {
 
 
-        //preference
-      /*  SharedPreferences SharedPref ;
-        SharedPref = getSharedPreferences("Staytuned",Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = SharedPref.edit();
-        sharedPrefEditor.putString("Username", "vince"
-        if (!(SharedPref.contains("username") && SharedPref.contains("pnumber"))){
-            Intent StartUpintent = new Intent(getApplicationContext(),login.class);
-            startActivity(StartUpintent);
-            finish();
-        }*/
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -260,10 +249,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                         return true;
                     }
                 });
-
-
-
-
 
     }
 

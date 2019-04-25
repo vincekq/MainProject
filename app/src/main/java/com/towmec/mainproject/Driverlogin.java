@@ -68,6 +68,8 @@ public class Driverlogin extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (!task.isSuccessful()) {
+                                Email.setError("Please enter a valid email address");
+                                Email.requestFocus();
                                 Toast.makeText(Driverlogin.this, "sign in error", Toast.LENGTH_SHORT).show();
                             } else{
 //

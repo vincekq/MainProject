@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 public class login2 extends AppCompatActivity {
     EditText editTextCode;
-    private Button VerifyCode;
     private FirebaseAuth mAuth;
     String codeSent;
 
@@ -33,7 +32,6 @@ public class login2 extends AppCompatActivity {
         setContentView(R.layout.activity_login2);
 
         editTextCode = findViewById(R.id.code);
-        VerifyCode = (Button) findViewById(R.id.verifycode);
         mAuth = FirebaseAuth.getInstance();
 
         findViewById(R.id.verifycode).setOnClickListener(new View.OnClickListener() {

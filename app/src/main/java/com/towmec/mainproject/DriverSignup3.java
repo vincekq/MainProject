@@ -69,7 +69,6 @@ public class DriverSignup3 extends AppCompatActivity implements View.OnClickList
                 progressBar.setVisibility(View.VISIBLE);
                 String user_id = mAuth.getCurrentUser().getUid();
                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
-                /*FirebaseUser user = mAuth.getCurrentUser();*/
                 current_user_db.child("ID Information").child("drivers license").setValue(Driverslicense.getText().toString());
                 current_user_db.child("ID Information").child("national id").setValue(Nationalid.getText().toString());
                 current_user_db.child("ID Information").child("insurance").setValue(Insurance.getText().toString());
