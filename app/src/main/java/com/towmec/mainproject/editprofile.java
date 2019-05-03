@@ -103,36 +103,6 @@ public class editprofile extends AppCompatActivity {
                         }
                     }
                 });
-//                    userdb.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//                            Userdetails userdetails = dataSnapshot.getValue(Userdetails.class);
-//                            if(userdetails != null) {
-//
-//
-//                                DatabaseReference current_user_db = userdb.child("users").child(userId).child("PersonalInformation");
-//                                current_user_db.setValue(userdetails).addOnCompleteListener(new OnCompleteListener<Void>() {
-//                                    @Override
-//                                    public void onComplete(@NonNull Task<Void> task) {
-//                                        if(task.isSuccessful()) {
-//                                            Toast.makeText(getApplicationContext(), "User Profile update successfully", Toast.LENGTH_SHORT).show();
-//                                            Intent intent = new Intent(editprofile.this, setPage.class);
-//                                            startActivity(intent);
-//                                            finish();
-//                                        }else {
-//                                            Toast.makeText(getApplicationContext(), "Unable to update profile", Toast.LENGTH_SHORT).show();
-//                                        }
-//                                    }
-//                                });
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                        }
-//                    });
             }
 
 
