@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             android:textAlignment="center"
-            android:text="Register and increase your customer base"
+            android:text="Register your vehicle and increase your customer base"
             android:textSize="18sp"
             android:layout_marginTop="20sp"/>
 

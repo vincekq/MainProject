@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -20,6 +21,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -39,10 +41,17 @@ public class editprofile extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editprofile);
 
+
+        ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
+        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+        actionbar.setTitle("Edit Profile");
+
         Firstname = findViewById(R.id.firstname);
         Lastname = findViewById(R.id.lastname);
         Email = findViewById(R.id.email);
         Phonenumber = findViewById(R.id.phonenumber);
+
         imageView = (ImageView) findViewById(R.id.upload);
         save = findViewById(R.id.Save);
         mAuth = FirebaseAuth.getInstance();
@@ -63,19 +72,21 @@ public class editprofile extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+                if(currentUser != null){
                 progressBar.setVisibility(View.VISIBLE);
                 String user_id = mAuth.getCurrentUser().getUid();
                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
                 /*FirebaseUser user = mAuth.getCurrentUser();*/
-                current_user_db.child("Profile").setValue(Firstname.getText().toString());
-                current_user_db.child("Profile").setValue(Lastname.getText().toString());
-                current_user_db.child("Profile").setValue(Email.getText().toString());
-                current_user_db.child("Profile").setValue(Phonenumber.getText().toString());
+                current_user_db.child("PersonalInformation").setValue(Firstname.getText().toString());
+                current_user_db.child("PersonalInformation").setValue(Lastname.getText().toString());
+                current_user_db.child("PersonalInformation").setValue(Phonenumber.getText().toString());
 
                 Toast.makeText(getApplicationContext(), "User Profile update successfully", Toast.LENGTH_SHORT).show();
-
-            }
+                    Intent intent = new Intent(editprofile.this, setPage.class);
+                    startActivity(intent);
+                    finish();
+            }}
         });
 
     }
@@ -84,7 +95,7 @@ public class editprofile extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
+       if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK && null != data) {
             Uri selectedImage = data.getData();
             String[] filePathColumn = { MediaStore.Images.Media.DATA };
 
@@ -100,7 +111,6 @@ public class editprofile extends AppCompatActivity {
             imageView.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 
         }
-
 
     }
 }

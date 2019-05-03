@@ -11,13 +11,13 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="300px"
+        android:layout_height="400px"
         android:layout_marginTop="10px"
         android:orientation="vertical"
         android:background="@color/darkblue">
 
         <Button
-            android:id="@+id/but2"
+            android:id="@+id/editprofilebtn"
             android:layout_margin="10dp"
             android:layout_gravity="end"
             android:background="@drawable/buttonstyle2"
@@ -35,48 +35,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20px"
+        android:layout_marginTop="40dp"
         android:orientation="vertical">
+
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30px"
-            android:text="First Name"
-            android:textColor="@color/darkblue"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="First Name"
+            android:layout_marginBottom="60px"
+            android:inputType="text"/>
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30px"
-            android:text="Last Name"
-            android:textColor="@color/darkblue"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="Last name"
+            android:layout_marginBottom="60px"
+            android:inputType="text"/>
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30px"
-            android:text="Email"
-            android:textColor="@color/darkblue"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="Email"
+            android:layout_marginBottom="60px"
+            android:inputType="textEmailAddress"/>
+
+
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="30px"
-            android:text="Phone Number"
-            android:textColor="@color/darkblue"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30px"
-            android:text=""
-            android:textColor="@color/darkblue"/>
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:hint="Phone number"
+            android:inputType="phone"/>
+
     </LinearLayout>
 </LinearLayout>

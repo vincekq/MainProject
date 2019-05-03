@@ -34,12 +34,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="20px"
+        android:layout_marginTop="40px"
         android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="First Name"
             android:textColor="@color/darkblue"/>
         <EditText
@@ -48,8 +48,8 @@
             android:id="@+id/firstname"
             />
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Last Name"
             android:textColor="@color/darkblue"/>
         <EditText
@@ -58,8 +58,8 @@
             android:id="@+id/lastname"
             />
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Email"
             android:textColor="@color/darkblue"/>
         <EditText
@@ -67,8 +67,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/email"/>
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="30px"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Phone Number"
             android:textColor="@color/darkblue"/>
         <EditText
@@ -77,7 +77,7 @@
             android:id="@+id/phonenumber"/>
         <Button
             android:id="@+id/Save"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="50dp"
             android:layout_width="140dp"
             android:layout_height="50dp"
             android:layout_gravity="center"

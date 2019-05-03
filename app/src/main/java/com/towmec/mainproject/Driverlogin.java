@@ -43,7 +43,6 @@ public class Driverlogin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 FirebaseUser currentUser = mAuth.getCurrentUser();
-
                 if(currentUser != null){
                     Intent intent = new Intent(Driverlogin.this, DriverMapsActivity.class);
                     startActivity(intent);
@@ -64,6 +63,7 @@ public class Driverlogin extends AppCompatActivity {
                 final String email = Email.getText().toString();
                 final String password = Password.getText().toString();
                 if(!TextUtils.isEmpty(email) && !TextUtils.isEmpty(password)) {
+
                     mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Driverlogin.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -72,7 +72,6 @@ public class Driverlogin extends AppCompatActivity {
                                 Email.requestFocus();
                                 Toast.makeText(Driverlogin.this, "sign in error", Toast.LENGTH_SHORT).show();
                             } else{
-//
                                 Intent intent = new Intent(Driverlogin.this,DriverMapsActivity.class);
                                 startActivity(intent);
                                 finish();

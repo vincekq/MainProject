@@ -22,7 +22,7 @@
             android:textSize="40sp"
             android:textColor="#fff"
             android:textAlignment="center"
-            android:text="Welcome to Cloud Tow"/>
+            android:text="Welcome to CloudTow"/>
 
         <TextView
             android:id="@+id/brief"
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="#fff"
-                android:text="Be a Driver"/>
+                android:text="Driver portal"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -64,21 +64,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
         <EditText
-            android:id="@+id/Uname"
+            android:id="@+id/email"
             android:drawableLeft="@drawable/ic_person_outline_black_24dp"
             android:drawablePadding="10dp"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="username"/>
+            android:inputType="textEmailAddress"
+            android:hint="Email"/>
         <EditText
-            android:id="@+id/Pnumber"
-            android:drawableLeft="@drawable/ic_phone_black_24dp"
+            android:id="@+id/password"
+            android:drawableLeft="@drawable/ic_lock_outline_black_24dp"
             android:drawablePadding="10dp"
             android:layout_width="350dp"
             android:layout_height="wrap_content"
-            android:hint="PhoneNumber"
-            android:inputType="phone"/>
+            android:hint="Password"
+            android:inputType="textPassword"/>
 
         <Button
             android:id="@+id/GetVerification"

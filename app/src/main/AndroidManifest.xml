@@ -21,7 +21,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".editprofile"></activity>
         <activity android:name=".login2" />
-        <activity android:name=".Main2Activity" />
         <activity android:name=".setdriver" />
         <activity android:name=".helpdriver" />
         <activity android:name=".paydriver" />
@@ -115,7 +114,6 @@
 
         <activity android:name=".DriverSignUp2" />
         <activity android:name=".DriverSignup3" />
-        <activity android:name=".DriverSignup4" />
     </application>
 
 </manifest>

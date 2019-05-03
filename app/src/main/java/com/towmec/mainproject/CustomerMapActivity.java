@@ -45,6 +45,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -85,6 +86,9 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private DrawerLayout mDrawerlayout;
     private Toolbar toolbar;
     private ActionBarDrawerToggle mToggle;
+    private TextView userEmail;
+    private View headerView;
+    private PrefsManager prefsManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +97,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-
+        prefsManager = new PrefsManager(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -103,19 +107,16 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         mDriverName = (TextView) findViewById(R.id.driverName);
         mDriverPhone = (TextView) findViewById(R.id.driverPhone);
         mDriverCar = (TextView) findViewById(R.id.driverCar);
-
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
-
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         mRadioGroup.check(R.id.normal);
-
         /*mLogout = (Button) findViewById(R.id.logout);
          mHistory = (Button) findViewById(R.id.history);
          */
         mRequest = (Button) findViewById(R.id.request);
         mSettings = (Button) findViewById(R.id.settings);
 
-
+        String uservalues = prefsManager.getUserEmail();
 
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,14 +207,21 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         );
 
         NavigationView navigationView = findViewById(R.id.nav_view);
+        headerView = navigationView.getHeaderView(0);
+
+        userEmail =  headerView.findViewById(R.id.useremail);
+        userEmail.setText(uservalues);
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
+
                         menuItem.setChecked(true);
                         // close drawer when item is tapped
                         mDrawerlayout.closeDrawers();
+
+
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
@@ -546,10 +554,13 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                 if(getApplicationContext()!=null){
                     mLastLocation = location;
 
+
+
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
-                    //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    //mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+
                     if(!getDriversAroundStarted)
                         getDriversAround();
                 }

@@ -72,6 +72,7 @@ public class DriverSignup3 extends AppCompatActivity implements View.OnClickList
                 current_user_db.child("ID Information").child("drivers license").setValue(Driverslicense.getText().toString());
                 current_user_db.child("ID Information").child("national id").setValue(Nationalid.getText().toString());
                 current_user_db.child("ID Information").child("insurance").setValue(Insurance.getText().toString());
+
                 Toast.makeText(getApplicationContext(), "Truck Information successfully registered", Toast.LENGTH_SHORT).show();
 
                 FirebaseUser currentUser = mAuth.getCurrentUser();

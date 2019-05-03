@@ -82,7 +82,6 @@ public class DriverSignUp2 extends AppCompatActivity implements View.OnClickList
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
-
                 String user_id = mAuth.getCurrentUser().getUid();
                 DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
                 /*FirebaseUser user = mAuth.getCurrentUser();*/
@@ -91,6 +90,9 @@ public class DriverSignUp2 extends AppCompatActivity implements View.OnClickList
                 current_user_db.child("Truck Information").child("Truck type").setValue(Trucktype.getText().toString());
                 /* StoreDatabase()*/
                 Toast.makeText(getApplicationContext(), "Truck Information successfully registered", Toast.LENGTH_SHORT).show();
+
+
+
                 Intent intent = new Intent(DriverSignUp2.this, DriverSignup3.class);
                 startActivity(intent);
                 finish();

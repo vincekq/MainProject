@@ -83,27 +83,23 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     private Button mLogout, mSettings, mRideStatus, mHistory;
     private Switch mWorkingSwitch;
     private int status = 0;
-
     private String customerId = "", destination;
     private LatLng destinationLatLng, pickupLatLng;
     private float rideDistance;
-
     private Boolean isLoggingOut = false;
-
     private SupportMapFragment mapFragment;
-
     private LinearLayout mCustomerInfo;
-
     private ImageView mCustomerProfileImage;
-
     private TextView mCustomerName, mCustomerPhone, mCustomerDestination;
-
     private DrawerLayout mDrawerlayout;
     private Toolbar toolbardriver;
     private ActionBarDrawerToggle mToggle;
-
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthListener;
+    private PrefsManager prefsManager;
+    private View headerView;
+    private TextView userEmail;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,8 +115,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         mCustomerName = (TextView) findViewById(R.id.customerName);
         mCustomerPhone = (TextView) findViewById(R.id.customerPhone);
         mCustomerDestination = (TextView) findViewById(R.id.customerDestination);
-
         mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
+        String uservalues = prefsManager.getUserEmail();
+
 
         mAuth = FirebaseAuth.getInstance();
         mWorkingSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -191,6 +188,10 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         );
 
         NavigationView navigationView = findViewById(R.id.nv_view);
+        headerView = navigationView.getHeaderView(0);
+        userEmail =  headerView.findViewById(R.id.useremail);
+        userEmail.setText(uservalues);
+
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
