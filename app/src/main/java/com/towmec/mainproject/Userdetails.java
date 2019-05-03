@@ -2,7 +2,7 @@ package com.towmec.mainproject;
 
 public class Userdetails {
 
-    private String firstname, lastname, phonenumber;
+    private String firstname, lastname, phonenumber, email;
 
     public String getFirstname() {
         return firstname;
@@ -26,5 +26,13 @@ public class Userdetails {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

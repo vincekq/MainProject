@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -22,8 +23,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class editprofile extends AppCompatActivity {
     private static final int SELECT_PICTURE = 0;
@@ -43,9 +47,11 @@ public class editprofile extends AppCompatActivity {
 
 
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle("Edit Profile");
+        if(actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionbar.setTitle("Edit Profile");
+        }
 
         Firstname = findViewById(R.id.firstname);
         Lastname = findViewById(R.id.lastname);
@@ -72,24 +78,72 @@ public class editprofile extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseUser currentUser = mAuth.getCurrentUser();
-                if(currentUser != null){
-                progressBar.setVisibility(View.VISIBLE);
-                String user_id = mAuth.getCurrentUser().getUid();
-                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(user_id);
-                /*FirebaseUser user = mAuth.getCurrentUser();*/
-                current_user_db.child("PersonalInformation").setValue(Firstname.getText().toString());
-                current_user_db.child("PersonalInformation").setValue(Lastname.getText().toString());
-                current_user_db.child("PersonalInformation").setValue(Phonenumber.getText().toString());
 
-                Toast.makeText(getApplicationContext(), "User Profile update successfully", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(editprofile.this, setPage.class);
-                    startActivity(intent);
-                    finish();
-            }}
+                mAuth = FirebaseAuth.getInstance();
+                final String userId = mAuth.getCurrentUser().getUid();
+                final DatabaseReference userdb = FirebaseDatabase.getInstance().getReference();
+
+                Userdetails userprofiledetails = new Userdetails();
+                userprofiledetails.setFirstname(Firstname.getText().toString());
+                userprofiledetails.setLastname(Lastname.getText().toString());
+                userprofiledetails.setEmail(Email.getText().toString());
+                userprofiledetails.setPhonenumber(Phonenumber.getText().toString());
+
+                userdb.child("Users").child("Customers").child(userId).child("PersonalInformation").setValue(userprofiledetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(getApplicationContext(), "User Profile update successfully", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(editprofile.this, setPage.class);
+                            startActivity(intent);
+                            finish();
+                        }else {
+                            Log.d("test", task.toString());
+                            Toast.makeText(getApplicationContext(), "Unable to update profile", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+//                    userdb.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//                            Userdetails userdetails = dataSnapshot.getValue(Userdetails.class);
+//                            if(userdetails != null) {
+//
+//
+//                                DatabaseReference current_user_db = userdb.child("users").child(userId).child("PersonalInformation");
+//                                current_user_db.setValue(userdetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                    @Override
+//                                    public void onComplete(@NonNull Task<Void> task) {
+//                                        if(task.isSuccessful()) {
+//                                            Toast.makeText(getApplicationContext(), "User Profile update successfully", Toast.LENGTH_SHORT).show();
+//                                            Intent intent = new Intent(editprofile.this, setPage.class);
+//                                            startActivity(intent);
+//                                            finish();
+//                                        }else {
+//                                            Toast.makeText(getApplicationContext(), "Unable to update profile", Toast.LENGTH_SHORT).show();
+//                                        }
+//                                    }
+//                                });
+//                            }
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                        }
+//                    });
+            }
+
+
+
+
         });
 
+
+
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

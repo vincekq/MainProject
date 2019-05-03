@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,10 +20,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class setPage extends AppCompatActivity {
-    private TextView editTextfirstname, editTextlastname, editTextphone;
+    private TextView editTextfirstname, editTextlastname, editTextphone, editTextemail;
     private FirebaseAuth mAuth;
     private Button Editprofile;
 
+    private final String TAG = this.getClass().getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,15 +33,21 @@ public class setPage extends AppCompatActivity {
 
 
         ActionBar actionbar = getSupportActionBar();
-        actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
-        actionbar.setTitle("Settings");
+        if(actionbar != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            actionbar.setTitle("Settings");
+        }
 
         mAuth = FirebaseAuth.getInstance();
+        String userId = mAuth.getCurrentUser().getUid();
+//        Log.d(TAG, "currentUserId: "+mAuth.getUid());
         DatabaseReference userdb = FirebaseDatabase.getInstance().getReference();
-        editTextfirstname = findViewById(R.id.firstname);
-        editTextlastname = findViewById(R.id.lastname);
-        editTextphone = findViewById(R.id.phonenumber);
+        DatabaseReference userDetailsRef = userdb.child("Users").child("Customers").child(userId).child("PersonalInformation");
+        editTextfirstname = findViewById(R.id.editTextfirstname);
+        editTextlastname = findViewById(R.id.editTextlastname);
+        editTextphone = findViewById(R.id.editTextPhonenumber);
+        editTextemail = findViewById(R.id.editTextEmailAddress);
 
         Editprofile = findViewById(R.id.editprofilebtn);
 
@@ -51,25 +59,27 @@ public class setPage extends AppCompatActivity {
                 finish();
             }
     });
-        ValueEventListener listener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mAuth = FirebaseAuth.getInstance();
-                
+    userDetailsRef.addValueEventListener(new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                Userdetails userdetails = dataSnapshot.getValue(Userdetails.class);
+            Userdetails userdetails = dataSnapshot.getValue(Userdetails.class);
+            if(userdetails != null) {
+                Log.d(TAG, "userdetails: "+userdetails.toString());
                 editTextfirstname.setText(userdetails.getFirstname());
                 editTextlastname.setText(userdetails.getLastname());
+                editTextemail.setText(userdetails.getEmail());
                 editTextphone.setText(userdetails.getPhonenumber());
-
+            }else {
+                Log.d(TAG, "userdetails is: "+userdetails);
             }
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        };
-        userdb.addValueEventListener(listener);
+        }
+    });
 
 
     }
