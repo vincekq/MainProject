@@ -3,7 +3,5 @@
 <item android:id="@+id/trip" android:title="Trips" />
 <item android:id="@+id/payments" android:title="Payments" />
 <item android:id="@+id/help" android:title="Help" />
-<item android:id="@+id/promotions" android:title="Promotions" />
-<item android:id="@+id/settings" android:title="Settings" />
-<item android:id="@+id/legal" android:title="Legal" />
+<item android:id="@+id/settings" android:title="Profile" />
 </menu>

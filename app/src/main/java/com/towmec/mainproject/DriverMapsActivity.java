@@ -67,6 +67,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.BufferedInputStream;
 import java.sql.Driver;
 import java.util.ArrayList;
@@ -116,7 +118,8 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         mCustomerPhone = (TextView) findViewById(R.id.customerPhone);
         mCustomerDestination = (TextView) findViewById(R.id.customerDestination);
         mWorkingSwitch = (Switch) findViewById(R.id.workingSwitch);
-        String uservalues = prefsManager.getUserEmail();
+        prefsManager = new PrefsManager(this);
+        String driveremail = prefsManager.getUserEmail();
 
 
         mAuth = FirebaseAuth.getInstance();
@@ -189,9 +192,11 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
         NavigationView navigationView = findViewById(R.id.nv_view);
         headerView = navigationView.getHeaderView(0);
-        userEmail =  headerView.findViewById(R.id.useremail);
-        userEmail.setText(uservalues);
 
+        userEmail =  headerView.findViewById(R.id.DEmail);
+        if(driveremail != null){
+            userEmail.setText(driveremail);
+        }
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -265,7 +270,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverId).child("customerRequest").child("customerRideId");
         assignedCustomerRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     status = 1;
                     customerId = dataSnapshot.getValue().toString();
@@ -278,7 +283,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NotNull DatabaseError databaseError) {
             }
         });
     }
@@ -398,7 +403,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
         GeoFire geoFire = new GeoFire(ref);
-        geoFire.removeLocation(customerId);
+        if(!customerId.isEmpty()) {
+            geoFire.removeLocation(customerId);
+        }
         customerId="";
         rideDistance = 0;
 
@@ -541,24 +548,34 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     }
 
 
-
-
-
     private void connectDriver(){
         checkLocationPermission();
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-        mMap.setMyLocationEnabled(true);
+        if(mMap != null) {
+            mMap.setMyLocationEnabled(true);
+        }
     }
 
     private void disconnectDriver(){
         if(mFusedLocationClient != null){
-            mFusedLocationClient.removeLocationUpdates(mLocationCallback); }
+            mFusedLocationClient.removeLocationUpdates(mLocationCallback);
+        }
 
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Log.d("testUserId", userId);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
 
-        GeoFire geoFire = new GeoFire(ref);
-        geoFire.removeLocation(userId);
+//        GeoFire geoFire = new GeoFire(ref);
+//        geoFire.removeLocation(userId, new GeoFire.CompletionListener() {
+//            @Override
+//            public void onComplete(String key, DatabaseError error) {
+//                if(key != null) {
+//                    Log.d("test2", key);
+//                }else {
+//                    Log.e("test2", error.getDetails());
+//                }
+//            }
+//        });
     }
 
 

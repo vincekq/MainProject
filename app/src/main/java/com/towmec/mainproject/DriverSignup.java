@@ -75,6 +75,7 @@ public class DriverSignup extends AppCompatActivity implements View.OnClickListe
                 boolean userCreated = registerUser();
                 if (userCreated) {
                     Intent intent = new Intent(DriverSignup.this, DriverSignUp2.class);
+                    prefsManager.setIsLoggedIn();
                     startActivity(intent);
                     finish();
                 }
@@ -139,12 +140,15 @@ public class DriverSignup extends AppCompatActivity implements View.OnClickListe
                 progressBar.setVisibility(View.GONE);
                 if (task.isSuccessful()) {
                     String user_id = mAuth.getCurrentUser().getUid();
+                    String user_details = mAuth.getCurrentUser().getEmail();
                     DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
                     current_user_db.child("PersonalInformation").child("username").setValue(Username.getText().toString());
                     current_user_db.child("PersonalInformation").child("email").setValue(Email.getText().toString());
                     current_user_db.child("PersonalInformation").child("phonenumber").setValue(Phonenumber.getText().toString());
-                    prefsManager.setUserType("driver");
                     Toast.makeText(getApplicationContext(), "Driver Information successfully registered", Toast.LENGTH_SHORT).show();
+
+                    prefsManager.setUserType("driver");
+                    prefsManager.setUserEmail(user_details);
                 } else {
                     Toast.makeText(getApplicationContext(), "Some error occurred during signup", Toast.LENGTH_SHORT).show();
                 }

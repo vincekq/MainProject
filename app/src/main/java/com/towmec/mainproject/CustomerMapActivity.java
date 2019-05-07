@@ -89,6 +89,8 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private TextView userEmail;
     private View headerView;
     private PrefsManager prefsManager;
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +98,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         prefsManager = new PrefsManager(this);
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
@@ -110,13 +111,11 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         mRatingBar = (RatingBar) findViewById(R.id.ratingBar);
         mRadioGroup = (RadioGroup) findViewById(R.id.radioGroup);
         mRadioGroup.check(R.id.normal);
-        /*mLogout = (Button) findViewById(R.id.logout);
-         mHistory = (Button) findViewById(R.id.history);
-         */
         mRequest = (Button) findViewById(R.id.request);
         mSettings = (Button) findViewById(R.id.settings);
 
         String uservalues = prefsManager.getUserEmail();
+        mAuth = FirebaseAuth.getInstance();
 
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,8 +123,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
                 if (requestBol){
                     endRide();
-
-
                 }else{
                     int selectId = mRadioGroup.getCheckedRadioButtonId();
 
@@ -138,7 +135,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                     requestService = radioButton.getText().toString();
 
                     requestBol = true;
-
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
@@ -238,19 +234,10 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                                 Intent b = new Intent(CustomerMapActivity.this,helpPage.class);
                                 startActivity(b);
                                 return true;
-                            case R.id.promotions:
-                                Intent c = new Intent(CustomerMapActivity.this,promoPage.class);
-                                startActivity(c);
-                                return true;
                             case R.id.settings:
                                 Intent d = new Intent(CustomerMapActivity.this,setPage.class);
                                 startActivity(d);
                                 return true;
-                            case R.id.legal:
-                                Intent e = new Intent(CustomerMapActivity.this,legalPage.class);
-                                startActivity(e);
-                                return true;
-
                         }
 
 
