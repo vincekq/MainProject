@@ -195,7 +195,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
         userEmail =  headerView.findViewById(R.id.DEmail);
         if(driveremail != null){
-            userEmail.setText(driveremail);
+/*            userEmail.setText(driveremail);*/
         }
         navigationView.setNavigationItemSelectedListener(
                 new NavigationView.OnNavigationItemSelectedListener() {
@@ -231,9 +231,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                                     dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
                                             FirebaseAuth.getInstance().signOut();
-                                            Intent SignInActivityIntent = new Intent(getApplicationContext(), Driverlogin.class);
+                                            Intent SignInActivityIntent = new Intent(getApplicationContext(), login.class);
                                             startActivity(SignInActivityIntent);
-                                            Toast.makeText(DriverMapsActivity.this, "Logout", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(DriverMapsActivity.this, "You have logged out successfully", Toast.LENGTH_SHORT).show();
                                         }});
                                     dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int id) {
@@ -494,9 +494,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
                     switch (customerId){
                         case "":
-                            geoFireWorking.removeLocation(userId);
+/*                            geoFireWorking.removeLocation(userId);
                             geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-                            break;
+                            */break;
 
                         default:
                             geoFireAvailable.removeLocation(userId);
@@ -537,7 +537,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-                        mMap.setMyLocationEnabled(true);
+                       /* mMap.setMyLocationEnabled(true);*/
                     }
                 } else{
                     Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();

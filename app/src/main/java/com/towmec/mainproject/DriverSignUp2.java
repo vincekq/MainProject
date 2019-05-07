@@ -36,21 +36,7 @@ public class DriverSignUp2 extends AppCompatActivity implements View.OnClickList
         Licenseplate = (EditText) findViewById(R.id.licenseplate);
         Trucktype=(EditText) findViewById(R.id.trucktype);
         progressBar = (ProgressBar) findViewById(R.id.progressbar);
-
         mAuth = FirebaseAuth.getInstance();
-        firebaseAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                if (user!=null){
-                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                    Intent intent = new Intent(DriverSignUp2.this, Driverlogin.class);
-                    startActivity(intent);
-                    finish();
-                    return;
-                }
-            }
-        };
 
 
         findViewById(R.id.btnextPage2).setOnClickListener((View.OnClickListener) this);
@@ -82,18 +68,23 @@ public class DriverSignUp2 extends AppCompatActivity implements View.OnClickList
                 }
 
                 progressBar.setVisibility(View.VISIBLE);
+
                 String user_id = mAuth.getCurrentUser().getUid();
-                DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
-                current_user_db.child("Truck Information").child("Truck manufacturer").setValue(Manufacturer.getText().toString());
-                current_user_db.child("Truck Information").child("License plate").setValue(Licenseplate.getText().toString());
-                current_user_db.child("Truck Information").child("Truck type").setValue(Trucktype.getText().toString());
-                Toast.makeText(getApplicationContext(), "Truck Information successfully registered", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(DriverSignUp2.this, DriverSignup3.class);
-                startActivity(intent);
-                finish();
-            }
-
+                if (user_id != null) {
+                    DatabaseReference current_user_db = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(user_id);
+                    /*FirebaseUser user = mAuth.getCurrentUser();*/
+                    current_user_db.child("Truck Information").child("Truck manufacturer").setValue(Manufacturer.getText().toString());
+                    current_user_db.child("Truck Information").child("License plate").setValue(Licenseplate.getText().toString());
+                    current_user_db.child("Truck Information").child("Truck type").setValue(Trucktype.getText().toString());
+                    /* StoreDatabase()*/
+                    Toast.makeText(getApplicationContext(), "Truck Information successfully registered", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(DriverSignUp2.this, DriverSignup3.class);
+                    startActivity(intent);
+                    finish();
+                }
+            else {
+                Toast.makeText(getApplicationContext(), "error", Toast.LENGTH_SHORT).show();
+            }}
     });
 }
 

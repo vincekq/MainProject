@@ -18,6 +18,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -54,6 +55,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -115,15 +117,16 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         mSettings = (Button) findViewById(R.id.settings);
 
         String uservalues = prefsManager.getUserEmail();
-        mAuth = FirebaseAuth.getInstance();
 
+        mAuth = FirebaseAuth.getInstance();
         mRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 if (requestBol){
                     endRide();
-                }else{
+                }else
+                    {
                     int selectId = mRadioGroup.getCheckedRadioButtonId();
 
                     final RadioButton radioButton = (RadioButton) findViewById(selectId);
@@ -135,19 +138,32 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                     requestService = radioButton.getText().toString();
 
                     requestBol = true;
+
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+
+                    if(currentUser!=null){
+
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference("customerRequest");
                     GeoFire geoFire = new GeoFire(ref);
-                    geoFire.setLocation(userId, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()));
+                    geoFire.setLocation(userId, new GeoLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude()),new GeoFire.CompletionListener() {
+                        @Override
+                        public void onComplete(String key, DatabaseError error) {
 
-                    pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
-                    pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLocation).title("Pickup Here").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickup)));
-
-                    mRequest.setText("Getting your Driver....");
-
-                    getClosestDriver();
+                            pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
+                            pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLocation).title("Pickup Here").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickup)));
+                            mRequest.setText("Getting your truck....");
+                        }
+                    });
                 }
+                else
+                    {
+                        Log.e(DriverMapsActivity.class.getSimpleName(), "ERROR, NULL USER");
+                        return;
+                    }
+                        getClosestDriver();
+                    }
             }
         });
 
@@ -262,6 +278,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private String driverFoundID;
 
     GeoQuery geoQuery;
+
     private void getClosestDriver(){
         DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("driversAvailable");
 
@@ -469,7 +486,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
     private void endRide(){
         requestBol = false;
-        geoQuery.removeAllListeners();
+        /* geoQuery.removeAllListeners();*/
         driverLocationRef.removeEventListener(driverLocationRefListener);
         driveHasEndedRef.removeEventListener(driveHasEndedRefListener);
 
@@ -546,7 +563,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(12));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(10));
 
                     if(!getDriversAroundStarted)
                         getDriversAround();

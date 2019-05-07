@@ -39,12 +39,7 @@ public class splash extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 } finally {
-//                    call pref manager
-//                    SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(splash.this);
                     boolean isLoggedIn = prefsManager.getIsLoggedIn();
-//                    Toast.makeText(getApplicationContext(), "isLoggedIn: "+isLoggedIn, Toast.LENGTH_SHORT).show();
-//                    check if user has logged in
-//                    if user hasn't logged in open activity i
                     if (!isLoggedIn) {
                         startActivity(i);
                         finish();

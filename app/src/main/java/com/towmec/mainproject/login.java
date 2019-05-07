@@ -77,6 +77,7 @@ public class login extends AppCompatActivity {
 
                 if (currentUser != null) {
                     Intent intent = new Intent(login.this, DriverMapsActivity.class);
+                    Toast.makeText(getApplicationContext(), "Redirecting you to Driver Map..", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
                     finish();
 
