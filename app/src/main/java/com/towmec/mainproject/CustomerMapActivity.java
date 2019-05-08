@@ -154,6 +154,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                             pickupLocation = new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude());
                             pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLocation).title("Pickup Here").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickup)));
                             mRequest.setText("Getting your truck....");
+                            getClosestDriver();
                         }
                     });
                 }
@@ -162,7 +163,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                         Log.e(DriverMapsActivity.class.getSimpleName(), "ERROR, NULL USER");
                         return;
                     }
-                        getClosestDriver();
                     }
             }
         });
@@ -280,6 +280,8 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     GeoQuery geoQuery;
 
     private void getClosestDriver(){
+
+
         DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("driversAvailable");
 
         GeoFire geoFire = new GeoFire(driverLocation);
@@ -432,18 +434,18 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-                    if(dataSnapshot.child("name")!=null){
-                        mDriverName.setText(dataSnapshot.child("name").getValue().toString());
+                    if(dataSnapshot.child("username")!=null){
+                        mDriverName.setText(dataSnapshot.child("username").getValue().toString());
                     }
-                    if(dataSnapshot.child("phone")!=null){
-                        mDriverPhone.setText(dataSnapshot.child("phone").getValue().toString());
+                    if(dataSnapshot.child("phonenumber")!=null){
+                        mDriverPhone.setText(dataSnapshot.child("phonenumber").getValue().toString());
                     }
-                    if(dataSnapshot.child("car")!=null){
+                    /*if(dataSnapshot.child("car")!=null){
                         mDriverCar.setText(dataSnapshot.child("car").getValue().toString());
                     }
                     if(dataSnapshot.child("profileImageUrl").getValue()!=null){
                         Glide.with(getApplication()).load(dataSnapshot.child("profileImageUrl").getValue().toString()).into(mDriverProfileImage);
-                    }
+                    }*/
 
                     int ratingSum = 0;
                     float ratingsTotal = 0;
@@ -548,7 +550,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         }
 
         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-        mMap.setMyLocationEnabled(true);
+ mMap.setMyLocationEnabled(true);
     }
 
     LocationCallback mLocationCallback = new LocationCallback(){
