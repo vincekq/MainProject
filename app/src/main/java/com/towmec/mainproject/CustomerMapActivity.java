@@ -320,7 +320,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                                     getDriverLocation();
                                     getDriverInfo();
                                     getHasRideEnded();
-                                    mRequest.setText("Looking for Driver Location....");
+                                    mRequest.setText("Getting tow truck's Location....");
                                 }
                             }
                         }
@@ -443,9 +443,9 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 //                    if(dataSnapshot.child("phonenumber")!=null){
                         mDriverPhone.setText(dataSnapshot.child("PersonalInformation").child("phonenumber").getValue().toString());
 //                    }
-                    /*if(dataSnapshot.child("car")!=null){
-                        mDriverCar.setText(dataSnapshot.child("car").getValue().toString());
-                    }
+                    /*if(dataSnapshot.child("car")!=null){*/
+                        mDriverCar.setText(dataSnapshot.child("Truck Information").child("License plate").getValue().toString());
+                    /*}
                     if(dataSnapshot.child("profileImageUrl").getValue()!=null){
                         Glide.with(getApplication()).load(dataSnapshot.child("profileImageUrl").getValue().toString()).into(mDriverProfileImage);
                     }*/
@@ -491,7 +491,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
     private void endRide(){
         requestBol = false;
-        /* geoQuery.removeAllListeners();*/
+        geoQuery.removeAllListeners();
         driverLocationRef.removeEventListener(driverLocationRefListener);
         driveHasEndedRef.removeEventListener(driveHasEndedRefListener);
 
@@ -515,13 +515,13 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         if (mDriverMarker != null){
             mDriverMarker.remove();
         }
-        mRequest.setText("call Uber");
+        mRequest.setText("Call Tow truck");
 
         mDriverInfo.setVisibility(View.GONE);
         mDriverName.setText("");
         mDriverPhone.setText("");
         mDriverCar.setText("Destination: --");
-        mDriverProfileImage.setImageResource(R.mipmap.ic_launcher);
+        /*mDriverProfileImage.setImageResource(R.mipmap.ic_launcher);*/
     }
 
     /*-------------------------------------------- Map specific functions -----
