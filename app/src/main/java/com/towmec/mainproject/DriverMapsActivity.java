@@ -134,7 +134,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-       mRideStatus = (Button) findViewById(R.id.rideStatus);
+        getAssignedCustomer();
+
+        mRideStatus = (Button) findViewById(R.id.rideStatus);
 
         mRideStatus.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,7 +159,6 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-        getAssignedCustomer();
 
         mDrawerlayout =(DrawerLayout) findViewById(R.id.mapdrawer);
 
@@ -263,6 +264,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         String driverId = "";
         if(currentUser != null){
             driverId = currentUser.getUid();
+
         }else{
             Log.e(DriverMapsActivity.class.getSimpleName(), "ERROR, NULL USER");
             return;
@@ -492,15 +494,50 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                     GeoFire geoFireAvailable = new GeoFire(refAvailable);
                     GeoFire geoFireWorking = new GeoFire(refWorking);
 
+                    Log.d("test23", "userID = "+userId);
+
                     switch (customerId){
                         case "":
-/*                            geoFireWorking.removeLocation(userId);
-                            geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
-                            */break;
+                            geoFireWorking.removeLocation(userId, new GeoFire.CompletionListener() {
+                                @Override
+                                public void onComplete(String key, DatabaseError error) {
+                                    if(key != null) {
+                                        Log.d("test24", "Yippeeee");
+                                    }else {
+                                        Log.e("test24", error.getMessage());
+                                    }
+                                }
+                            });
+                            geoFireAvailable.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                                @Override
+                                public void onComplete(String key, DatabaseError error) {
+
+                                }
+                            });
+                            break;
 
                         default:
-                            geoFireAvailable.removeLocation(userId);
-                            geoFireWorking.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()));
+
+                            geoFireAvailable.removeLocation(userId, new GeoFire.CompletionListener() {
+                                @Override
+                                public void onComplete(String key, DatabaseError error) {
+                                    if(key != null) {
+                                        Log.d("test25", "Yippee");
+                                    }else {
+                                        Log.e("test25", error.getMessage());
+                                    }
+                                }
+                            });
+                            geoFireWorking.setLocation(userId, new GeoLocation(location.getLatitude(), location.getLongitude()), new GeoFire.CompletionListener() {
+                                @Override
+                                public void onComplete(String key, DatabaseError error) {
+                                    if(key != null) {
+                                        Log.d("test25", "Yippee");
+                                    }else {
+                                        Log.e("test25", error.getMessage());
+                                    }
+                                }
+                            });
                             break;
                     }
                 }
@@ -537,7 +574,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 if(grantResults.length >0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
                     if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
                         mFusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
-                       /* mMap.setMyLocationEnabled(true);*/
+                       mMap.setMyLocationEnabled(true);
                     }
                 } else{
                     Toast.makeText(getApplicationContext(), "Please provide the permission", Toast.LENGTH_LONG).show();
@@ -564,18 +601,18 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         Log.d("testUserId", userId);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
+        GeoFire geoFire = new GeoFire(ref);
+       geoFire.removeLocation(userId, new GeoFire.CompletionListener() {
+           @Override
 
-//        GeoFire geoFire = new GeoFire(ref);
-//        geoFire.removeLocation(userId, new GeoFire.CompletionListener() {
-//            @Override
-//            public void onComplete(String key, DatabaseError error) {
-//                if(key != null) {
-//                    Log.d("test2", key);
-//                }else {
-//                    Log.e("test2", error.getDetails());
-//                }
-//            }
-//        });
+            public void onComplete(String key, DatabaseError error) {
+                if(key != null) {
+                    Log.d("test2", key);
+                }else {
+                    Log.e("test2", error.getDetails());
+                }
+            }
+        });
     }
 
 

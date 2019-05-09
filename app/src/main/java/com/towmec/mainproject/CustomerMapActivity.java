@@ -63,6 +63,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -92,6 +94,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private View headerView;
     private PrefsManager prefsManager;
     private FirebaseAuth mAuth;
+    private static final String TAG ="CustomerActivity";
 
 
     @Override
@@ -273,18 +276,17 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         }
         return super.onOptionsItemSelected(item);
     }
+
     private int radius = 1;
     private Boolean driverFound = false;
     private String driverFoundID;
-
     GeoQuery geoQuery;
 
     private void getClosestDriver(){
 
-
         DatabaseReference driverLocation = FirebaseDatabase.getInstance().getReference().child("driversAvailable");
-
         GeoFire geoFire = new GeoFire(driverLocation);
+
         geoQuery = geoFire.queryAtLocation(new GeoLocation(pickupLocation.latitude, pickupLocation.longitude), radius);
         geoQuery.removeAllListeners();
 
@@ -302,8 +304,8 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                                     return;
                                 }
 
-                                if(driverMap.get("service").equals(requestService)){
-                                    driverFound = true;
+                                driverFound = true;
+                                if(driverFound){
                                     driverFoundID = dataSnapshot.getKey();
 
                                     DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverFoundID).child("customerRequest");
@@ -371,12 +373,13 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
     private DatabaseReference driverLocationRef;
     private ValueEventListener driverLocationRefListener;
     private void getDriverLocation(){
-        driverLocationRef = FirebaseDatabase.getInstance().getReference().child("driversWorking").child(driverFoundID).child("l");
+        driverLocationRef = FirebaseDatabase.getInstance().getReference().child("driversWorking").child(driverFoundID);
         driverLocationRefListener = driverLocationRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && requestBol){
                     List<Object> map = (List<Object>) dataSnapshot.getValue();
+                    Log.d(TAG,"map contains"+map.size()+"items");
                     double locationLat = 0;
                     double locationLng = 0;
                     if(map.get(0) != null){
@@ -434,12 +437,12 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
-                    if(dataSnapshot.child("username")!=null){
-                        mDriverName.setText(dataSnapshot.child("username").getValue().toString());
-                    }
-                    if(dataSnapshot.child("phonenumber")!=null){
-                        mDriverPhone.setText(dataSnapshot.child("phonenumber").getValue().toString());
-                    }
+//                    if(dataSnapshot.child("username")!=null){
+                        mDriverName.setText(dataSnapshot.child("PersonalInformation").child("username").getValue().toString());
+//                    }
+//                    if(dataSnapshot.child("phonenumber")!=null){
+                        mDriverPhone.setText(dataSnapshot.child("PersonalInformation").child("phonenumber").getValue().toString());
+//                    }
                     /*if(dataSnapshot.child("car")!=null){
                         mDriverCar.setText(dataSnapshot.child("car").getValue().toString());
                     }
@@ -472,7 +475,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         driveHasEndedRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverFoundID).child("customerRequest").child("customerRideId");
         driveHasEndedRefListener = driveHasEndedRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
 
                 }else{
@@ -481,7 +484,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NotNull DatabaseError databaseError) {
             }
         });
     }
