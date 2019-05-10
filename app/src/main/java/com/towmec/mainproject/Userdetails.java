@@ -1,6 +1,6 @@
 package com.towmec.mainproject;
 
-public class Userdetails {
+public class Userdetails extends Driverdetails {
 
     private String firstname, lastname, phonenumber, email;
 
