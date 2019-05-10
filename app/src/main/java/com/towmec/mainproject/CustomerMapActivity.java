@@ -307,7 +307,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                                 driverFound = true;
                                 if(driverFound){
                                     driverFoundID = dataSnapshot.getKey();
-
                                     DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverFoundID).child("customerRequest");
                                     String customerId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                                     HashMap map = new HashMap();
@@ -320,7 +319,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                                     getDriverLocation();
                                     getDriverInfo();
                                     getHasRideEnded();
-                                    mRequest.setText("Getting tow truck's Location....");
+                                    mRequest.setText("Searching for tow truck's Location....");
                                 }
                             }
                         }
@@ -443,7 +442,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 //                    if(dataSnapshot.child("phonenumber")!=null){
                         mDriverPhone.setText(dataSnapshot.child("PersonalInformation").child("phonenumber").getValue().toString());
 //                    }
-                    /*if(dataSnapshot.child("car")!=null){*/
+//                    if(dataSnapshot.child("car")!=null){
                         mDriverCar.setText(dataSnapshot.child("Truck Information").child("License plate").getValue().toString());
                     /*}
                     if(dataSnapshot.child("profileImageUrl").getValue()!=null){
@@ -491,9 +490,9 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
 
     private void endRide(){
         requestBol = false;
-        geoQuery.removeAllListeners();
+        /* geoQuery.removeAllListeners();
         driverLocationRef.removeEventListener(driverLocationRefListener);
-        driveHasEndedRef.removeEventListener(driveHasEndedRefListener);
+        driveHasEndedRef.removeEventListener(driveHasEndedRefListener);*/
 
         if (driverFoundID != null){
             DatabaseReference driverRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverFoundID).child("customerRequest");
@@ -515,7 +514,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         if (mDriverMarker != null){
             mDriverMarker.remove();
         }
-        mRequest.setText("Call Tow truck");
+        mRequest.setText("Request Tow truck");
 
         mDriverInfo.setVisibility(View.GONE);
         mDriverName.setText("");

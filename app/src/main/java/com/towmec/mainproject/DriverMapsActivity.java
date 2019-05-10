@@ -382,9 +382,9 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                     if(map.get("phone")!=null){
                         mCustomerPhone.setText(map.get("phone").toString());
                     }
-                    if(map.get("profileImageUrl")!=null){
-                        Glide.with(getApplication()).load(map.get("profileImageUrl").toString()).into(mCustomerProfileImage);
-                    }
+                  //  if(map.get("profileImageUrl")!=null){
+                  //      Glide.with(getApplication()).load(map.get("profileImageUrl").toString()).into(mCustomerProfileImage);
+                  //  }
                 }
             }
 
