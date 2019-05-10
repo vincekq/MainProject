@@ -86,20 +86,16 @@ public class editdriverpage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(getApplicationContext(), "Driver Profile update successfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(editdriverpage.this, setdriver.class);
-                            startActivity(intent);
-                            finish();
                         }else {
                             Log.d("test", task.toString());
                             Toast.makeText(getApplicationContext(), "Unable to update profile", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-                userdb.child("Users").child("Drivers").child(userId).child("PersonalInformation").setValue(truckdetails).addOnCompleteListener(new OnCompleteListener<Void>() {
+                userdb.child("Users").child("Drivers").child(userId).child("Truck Information").setValue(truckdetails).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(getApplicationContext(), "Driver Profile update successfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(editdriverpage.this, setdriver.class);
                             startActivity(intent);
                             finish();
