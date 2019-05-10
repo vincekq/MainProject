@@ -20,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class setPage extends AppCompatActivity {
-    private TextView editTextfirstname, editTextlastname, editTextphone, editTextemail;
+    private EditText editTextfirstname, editTextlastname, editTextphone, editTextemail;
     private FirebaseAuth mAuth;
     private Button Editprofile;
 
