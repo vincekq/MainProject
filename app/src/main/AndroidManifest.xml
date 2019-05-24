@@ -100,7 +100,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyB1eLu_w7zvchTgv6Nw8VwLaUG3k4ODDKw" />
+            android:value="AIzaSyAOuEVWDsXaq-Q9qL57jURP83OWEC43q8I" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

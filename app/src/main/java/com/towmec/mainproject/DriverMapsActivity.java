@@ -134,7 +134,6 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-        getAssignedCustomer();
 
         mRideStatus = (Button) findViewById(R.id.rideStatus);
 
@@ -158,7 +157,6 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
         });
-
 
         mDrawerlayout =(DrawerLayout) findViewById(R.id.mapdrawer);
 
@@ -246,6 +244,8 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                         return true;
                     }
                 });
+
+        getAssignedCustomer();
     }
 
     @Override
@@ -262,14 +262,15 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
     private void getAssignedCustomer(){
         FirebaseUser currentUser = mAuth.getCurrentUser();
         String driverId = "";
-        if(currentUser != null){
+      //  String driverId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+       if(currentUser != null){
             driverId = currentUser.getUid();
-
         }else{
             Log.e(DriverMapsActivity.class.getSimpleName(), "ERROR, NULL USER");
             return;
         }
-        DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverId).child("customerRequest").child("customerRideId");
+
+      DatabaseReference assignedCustomerRef = FirebaseDatabase.getInstance().getReference().child("Users").child("Drivers").child(driverId).child("customerRequest").child("customerRideId");
         assignedCustomerRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
@@ -309,7 +310,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                         locationLng = Double.parseDouble(map.get(1).toString());
                     }
                     pickupLatLng = new LatLng(locationLat,locationLng);
-                    pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("pickup location").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+                    pickupMarker = mMap.addMarker(new MarkerOptions().position(pickupLatLng).title("pickup location").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_pickup)));
                     getRouteToMarker(pickupLatLng);
                 }
             }
@@ -370,17 +371,17 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
     private void getAssignedCustomerInfo(){
         mCustomerInfo.setVisibility(View.VISIBLE);
-        DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId);
+        DatabaseReference mCustomerDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child("Customers").child(customerId).child("PersonalInformation");
         mCustomerDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists() && dataSnapshot.getChildrenCount()>0){
                     Map<String, Object> map = (Map<String, Object>) dataSnapshot.getValue();
-                    if(map.get("name")!=null){
-                        mCustomerName.setText(map.get("name").toString());
+                    if(map.get("lastname")!=null){
+                        mCustomerName.setText(map.get("lastname").toString());
                     }
-                    if(map.get("phone")!=null){
-                        mCustomerPhone.setText(map.get("phone").toString());
+                    if(map.get("phonenumber")!=null){
+                        mCustomerPhone.setText(map.get("phonenumber").toString());
                     }
                   //  if(map.get("profileImageUrl")!=null){
                   //      Glide.with(getApplication()).load(map.get("profileImageUrl").toString()).into(mCustomerProfileImage);
@@ -421,7 +422,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         mCustomerName.setText("");
         mCustomerPhone.setText("");
         mCustomerDestination.setText("Destination: --");
-        mCustomerProfileImage.setImageResource(R.mipmap.ic_launcher_round);
+        mCustomerProfileImage.setImageResource(R.mipmap.ic_default_user);
     }
 
     private void recordRide(){
@@ -486,7 +487,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("driversAvailable");
@@ -602,7 +603,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
         Log.d("testUserId", userId);
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("driversAvailable");
         GeoFire geoFire = new GeoFire(ref);
-       geoFire.removeLocation(userId, new GeoFire.CompletionListener() {
+        geoFire.removeLocation(userId, new GeoFire.CompletionListener() {
            @Override
 
             public void onComplete(String key, DatabaseError error) {
