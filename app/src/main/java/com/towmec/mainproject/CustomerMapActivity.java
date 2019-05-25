@@ -180,14 +180,15 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
 
-        autocompleteFragment.setOnPlaceSelectedListener(new com.google.android.libraries.places.widget.listener.PlaceSelectionListener() {
+        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull com.google.android.libraries.places.api.model.Place place) {
-                destination = place.getName();
+                destination = place.getName().toString();
                 destinationLatLng = place.getLatLng();
+
             }
 
             @Override
@@ -581,7 +582,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
 
                     if(!getDriversAroundStarted)
                         getDriversAround();

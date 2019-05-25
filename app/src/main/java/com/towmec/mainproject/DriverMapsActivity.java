@@ -487,7 +487,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
                     LatLng latLng = new LatLng(location.getLatitude(),location.getLongitude());
                     mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-                    mMap.animateCamera(CameraUpdateFactory.zoomTo(13));
+                    mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
 
                     String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                     DatabaseReference refAvailable = FirebaseDatabase.getInstance().getReference("driversAvailable");
