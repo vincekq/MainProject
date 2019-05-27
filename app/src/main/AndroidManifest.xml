@@ -40,7 +40,14 @@
             android:name=".login"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity android:name=".Driverlogin" />
-        <activity android:name=".learntips" />
+        <activity
+            android:name=".learntips"
+            android:parentActivityName=".login"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".login" />
+        </activity>
         <activity
             android:name=".tripPage"
             android:parentActivityName=".CustomerMapActivity"

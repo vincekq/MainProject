@@ -251,7 +251,7 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                         // For example, swap UI fragments here
                         switch (menuItem.getItemId()){
                             case R.id.trip:
-                                Intent i = new Intent(CustomerMapActivity.this,tripPage.class);
+                                Intent i = new Intent(CustomerMapActivity.this,HistoryPage.class);
                                 startActivity(i);
                                 return true;
                             case R.id.payments:
@@ -387,7 +387,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
         driverLocationRefListener = driverLocationRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NotNull DataSnapshot dataSnapshot) {
-
                 Log.d(TAG,"Datasnapshot:"+dataSnapshot);
                 if(dataSnapshot.exists() && requestBol){
                     List<Object> map = (List< Object>) dataSnapshot.getValue();
@@ -406,17 +405,13 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                     if(mDriverMarker != null){
                         mDriverMarker.remove();
                     }
-
                     Location loc1 = new Location("");
                     loc1.setLatitude( pickupLocation.latitude);
                     loc1.setLongitude(pickupLocation.longitude);
-
                     Location loc2 = new Location("");
                     loc2.setLatitude(driverLatLng.latitude);
                     loc2.setLongitude(driverLatLng.longitude);
-
                     float distance = loc1.distanceTo(loc2);
-
                     if (distance<100){
                         mRequest.setText("Driver's Here");
                     }else{
@@ -425,7 +420,6 @@ public class CustomerMapActivity extends AppCompatActivity implements OnMapReady
                         Log.d(TAG,"Driver Latitude is :"+ driverLatLng.latitude);
                     mDriverMarker = mMap.addMarker(new MarkerOptions().position(driverLatLng).title("your driver").icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_car)));
                 }
-
             }
 
             @Override

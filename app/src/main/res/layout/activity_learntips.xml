@@ -1,18 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/darkblue"
     tools:context=".learntips">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="15dp"
-        android:text="sjhsiosjso"
-        />
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:background="@color/darkblue">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ABOUT"
+            android:textSize="25dp"
+            android:textColor="@color/darkpink"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="50px"
+            android:text="Cloud tow is an emergency app that connects you to the nearest towing car avaliable at your location"
+            android:textColor="@color/white"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HOW IT WORKS"
+                android:textColor="@color/darkpink"
+                android:textSize="25dp"
+                android:layout_marginTop="100px"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50px"
+                android:text="    First select one of the radio buttons provided in relation to the size of your car .Click the request tow truck button to send out your request to the nearest tow truck. .The details of your assigned driver would be provided at the bottom of your screen
+.You receive a driver id here notification when the driver gets to your location"
+                android:textColor="@color/white"
+                android:layout_marginBottom="20dp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100px"
+            android:text="CONTACT US"
+            android:textSize="20dp"
+            android:textColor="@color/darkpink"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50px"
 
-</RelativeLayout>
+            android:text="Cloudtowgh@yahoo.com"
+            android:textColor="@color/white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="Cloud Tow gh via facebook"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CloudTow_gh on twitter"
+            android:textColor="@color/white"/>
+
+
+    </LinearLayout>
+
+</android.support.v7.widget.LinearLayoutCompat>

@@ -207,7 +207,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
 
                         switch (menuItem.getItemId()){
                             case R.id.dhistory:
-                                Intent i = new Intent(DriverMapsActivity.this,HistoryPage.class);
+                                Intent i = new Intent(DriverMapsActivity.this,tripPage.class);
                                 startActivity(i);
                                 return true;
                             case R.id.dpayments:
@@ -240,6 +240,7 @@ public class DriverMapsActivity extends AppCompatActivity implements OnMapReadyC
                                         }
                                     });
                                     dialog.show();
+                                    finish();
                                     break; }
                         return true;
                     }
